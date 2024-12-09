@@ -7,29 +7,27 @@ public class RemoveDupFrmSortedArray {
 
         int length = nums.length;
         int index = 0;
-        int[] newArr = new int[length];
-        int newArrIndx = 0;
+        int newIndx = 0;
 
         while(index < length){
-            if(index == 0){
-                newArr[newArrIndx] = nums[index];
-                newArrIndx++;
-            }else{
-                if(nums[index] != newArr[newArrIndx-1]){
-                    newArr[newArrIndx] = nums[index];
-                    newArrIndx++;
-                }
+            if(nums[index] > nums[newIndx]){
+                newIndx++;
+                nums[newIndx] = nums[index];
             }
             index++;
         }
 
-        System.out.println(Arrays.toString(newArr));
-        return newArrIndx;
+        return newIndx+1;
     }
 
     public static void main(String[] args) {
         RemoveDupFrmSortedArray removeDupFrmSortedArray = new RemoveDupFrmSortedArray();
-        int length = removeDupFrmSortedArray.removeDuplicates(new int[]{1,1,2});
-        System.out.println(length);
+        int[] nums = new int[]{0,0,1,1,1,2,2,3,3,4};
+        int[] expectedNums = new int[]{1,2,0};
+        int k = removeDupFrmSortedArray.removeDuplicates(nums);
+        assert k == expectedNums.length;
+        for (int i = 0; i < k; i++) {
+            assert nums[i] == expectedNums[i];
+        }
     }
 }
