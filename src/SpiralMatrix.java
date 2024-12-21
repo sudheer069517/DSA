@@ -8,9 +8,9 @@ public class SpiralMatrix {
 
         int rowsLength = matrix.length;
         int columnLength = matrix[0].length;
-        int right = columnLength;
+        int right = columnLength-1;
         int left = 0;
-        int bottom = rowsLength;
+        int bottom = rowsLength-1;
         int top = 0;
         List<Integer> spiralList = new ArrayList<>();
 
@@ -19,33 +19,37 @@ public class SpiralMatrix {
         while(count < (rowsLength * columnLength)){
 
             //from left to right
-            for(int r = left; r < right; r++){
-                spiralList.add(matrix[left][r]);
-                top++;
+            for(int col = left; col <= right; col++){
+                spiralList.add(matrix[left][col]);
                 count++;
             }
 
             //from top to bottom
-            for(int t = top; t < bottom ; t++){
-                spiralList.add(matrix[t-1][top]);
+            for(int row = top + 1 ; row <= bottom ; row++){
+                spiralList.add(matrix[row][right]);
                 count++;
-                right--;
             }
 
             //from right to left
-            for(int l = right; l > left; l--){
-                spiralList.add(matrix[right][l]);
-                count++;
-                bottom--;
+            if(bottom != top) {
+                for(int col = right-1; col >= left; col--){
+                    spiralList.add(matrix[bottom][col]);
+                    count++;
+                }
             }
 
             //from bottom to top
-            for(int b = bottom; b > top; b--){
-                spiralList.add(matrix[b][bottom]);
-                count++;
-                left++;
+            if(left != right) {
+                for (int row = bottom - 1; row > top ; row--) {
+                    spiralList.add(matrix[row][left]);
+                    count++;
+                }
             }
 
+            top++;
+            left++;
+            bottom--;
+            right--;
         }
 
         return spiralList;
@@ -53,7 +57,7 @@ public class SpiralMatrix {
 
     public static void main(String[] args) {
         SpiralMatrix spiralMatrix = new SpiralMatrix();
-        List<Integer> spiralList = spiralMatrix.spiralOrder(new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}});
+        List<Integer> spiralList = spiralMatrix.spiralOrder(new int[][]{{1,2,3,4},{5,6,7,8}, {9,10,11,12}});
         System.out.print(spiralList);
     }
 
